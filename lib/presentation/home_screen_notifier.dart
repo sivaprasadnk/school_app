@@ -7,7 +7,3 @@ class HomeScreenNotifier extends StateNotifier<bool> {
     state = !state;
   }
 }
-
-final homeScreenNotifierProvider =
-    StateNotifierProvider<HomeScreenNotifier, bool>(
-        (ref) => HomeScreenNotifier());

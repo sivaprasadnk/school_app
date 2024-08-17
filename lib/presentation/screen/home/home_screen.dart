@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:school_app/presentation/home_screen_provider.dart';
+import 'package:school_app/presentation/providers.dart';
 import 'package:school_app/presentation/screen/widgets/home_screen_grid.dart';
 import 'package:school_app/presentation/screen/widgets/home_screen_list.dart';
 

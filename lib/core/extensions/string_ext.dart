@@ -7,4 +7,8 @@ extension StringExt on String {
     buffer.write(replaceFirst('#', ''));
     return Color(int.parse(buffer.toString(), radix: 16));
   }
+
+  String toTitleCase() {
+    return "${this[0].toUpperCase()}${substring(1).toLowerCase()}";
+  }
 }

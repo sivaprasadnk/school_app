@@ -7,3 +7,4 @@ const kLightGreenColor = Color.fromRGBO(170, 201, 191, 1);
 const kLightBlueColor = Color.fromRGBO(216, 235, 253, 1);
 const kLightRedColor = Color.fromRGBO(255, 224, 221, 1);
 const kLightYellowColor = Color.fromRGBO(255, 243, 217, 1);
+const kLightGreyColor = Color.fromRGBO(209, 209, 209, 1);

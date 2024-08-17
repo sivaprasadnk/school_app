@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:school_app/presentation/screen/class_list/class_list_screen.dart';
+import 'package:school_app/presentation/screen/students_list/students_list_screen.dart';
+import 'package:school_app/presentation/screen/subject_list/subject_list_screen.dart';
 
 class GridTileItem extends StatelessWidget {
   const GridTileItem(
@@ -17,7 +20,18 @@ class GridTileItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: GestureDetector(
-        onTap: () {},
+        onTap: () {
+          if (title.toLowerCase() == 'students') {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const StudentsListScreen()));
+          } else if (title.toLowerCase() == "subjects") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const SubjectListScreen()));
+          } else if (title.toLowerCase() == "class rooms") {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (_) => const ClassListScreen()));
+          }
+        },
         child: Container(
           height: 216.h,
           decoration: BoxDecoration(

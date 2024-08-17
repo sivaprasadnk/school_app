@@ -8,22 +8,19 @@ class ListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
-      child: Container(
-        width: double.infinity,
-        height: 48.h,
-        decoration: BoxDecoration(
-          color: bgcolor,
-          borderRadius: BorderRadius.circular(10.r),
-        ),
-        child: Center(
-          child: Text(
-            title,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 17.sp,
-            ),
+    return Container(
+      width: double.infinity,
+      height: 48.h,
+      decoration: BoxDecoration(
+        color: bgcolor,
+        borderRadius: BorderRadius.circular(10.r),
+      ),
+      child: Center(
+        child: Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 17.sp,
           ),
         ),
       ),
