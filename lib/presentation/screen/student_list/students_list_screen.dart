@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:school_app/core/constant_colors.dart';
-import 'package:school_app/core/extensions/string_ext.dart';
 import 'package:school_app/presentation/providers.dart';
-import 'package:school_app/presentation/screen/class_details/class_details_screen.dart';
+import 'package:school_app/presentation/screen/student_detail/student_detail_screen.dart';
+import 'package:school_app/presentation/screen/widgets/grey_container.dart';
 import 'package:school_app/presentation/screen/widgets/screen_title.dart';
 
-class ClassListScreen extends ConsumerWidget {
-  const ClassListScreen({super.key});
+class StudentsListScreen extends ConsumerWidget {
+  const StudentsListScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // var details = ref.watch(classroomNotifierProvider);
-    var api = ref.watch(getClassProvider);
+    var api = ref.watch(getStudentsProvider);
 
     return Scaffold(
       appBar: AppBar(
@@ -28,7 +26,7 @@ class ClassListScreen extends ConsumerWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 21.h),
-          const ScreenTitle(title: 'Class Rooms'),
+          const ScreenTitle(title: 'Students'),
           SizedBox(height: 32.h),
           Expanded(
             child: api.when(
@@ -36,11 +34,6 @@ class ClassListScreen extends ConsumerWidget {
                 return const Center(child: CircularProgressIndicator());
               },
               error: (error, stackTrace) {
-                // ScaffoldMessenger.of(context).showSnackBar(
-                //   SnackBar(
-                //     content: Text(error.toString()),
-                //   ),
-                // );
                 return Text('error :$error');
               },
               data: (data) {
@@ -51,34 +44,16 @@ class ClassListScreen extends ConsumerWidget {
                   itemCount: data.$1!.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    var item = data.$1![index];
+                    var stud = data.$1![index];
                     return GestureDetector(
                       onTap: () {
-                        ref
-                            .read(classroomNotifierProvider.notifier)
-                            .initialiseClass(item);
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (_) => ClassDetailsScreen(
-                                      classRoom: item,
-                                    )));
+                                builder: (_) =>
+                                    StudentDetailScreen(studentModel: stud)));
                       },
-                      child: Container(
-                        height: 70.h,
-                        margin: EdgeInsets.only(
-                            bottom: 16.h, left: 16.w, right: 16.w),
-                        padding: EdgeInsets.only(
-                          left: 22.w,
-                          top: 13.h,
-                          bottom: 14.h,
-                          right: 22.w,
-                        ),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: kLightGreyColor,
-                          borderRadius: BorderRadius.circular(10.r),
-                        ),
+                      child: GreyContainer(
                         child: Row(
                           children: [
                             Column(
@@ -86,13 +61,13 @@ class ClassListScreen extends ConsumerWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  item.name.toTitleCase(),
+                                  stud.name,
                                   style: TextStyle(
                                     fontSize: 17.sp,
                                   ),
                                 ),
                                 Text(
-                                  item.layout.toTitleCase(),
+                                  stud.email,
                                   style: TextStyle(
                                     fontSize: 13.sp,
                                   ),
@@ -100,22 +75,11 @@ class ClassListScreen extends ConsumerWidget {
                               ],
                             ),
                             const Spacer(),
-                            Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  "${item.size}",
-                                  style: TextStyle(
-                                    fontSize: 17.sp,
-                                  ),
-                                ),
-                                Text(
-                                  "Seats",
-                                  style: TextStyle(
-                                    fontSize: 13.sp,
-                                  ),
-                                )
-                              ],
+                            Text(
+                              "Age : ${stud.age}",
+                              style: TextStyle(
+                                fontSize: 17.sp,
+                              ),
                             )
                           ],
                         ),

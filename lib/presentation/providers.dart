@@ -8,11 +8,16 @@ import 'package:school_app/data/repository/repository_impl.dart';
 import 'package:school_app/domain/use_cases/get_classes.dart';
 import 'package:school_app/domain/use_cases/get_students.dart';
 import 'package:school_app/domain/use_cases/get_subjects.dart';
+import 'package:school_app/presentation/classroom_data.dart';
 import 'package:school_app/presentation/home_screen_notifier.dart';
 
 final homeScreenNotifierProvider =
     StateNotifierProvider<HomeScreenNotifier, bool>(
         (ref) => HomeScreenNotifier());
+
+final classroomNotifierProvider =
+    StateNotifierProvider<ClassroomNotifier, List<ClassroomData>>(
+        (ref) => ClassroomNotifier());
 
 final getStudentsProvider =
     FutureProvider<(List<StudentModel>?, String?)>((ref) async {

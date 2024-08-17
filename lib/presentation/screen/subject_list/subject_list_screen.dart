@@ -1,17 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:school_app/core/constant_colors.dart';
 import 'package:school_app/data/model/subject_model.dart';
+import 'package:school_app/domain/entity/classroom.dart';
 import 'package:school_app/presentation/providers.dart';
 import 'package:school_app/presentation/screen/subject_detail/subject_detail_screen.dart';
+import 'package:school_app/presentation/screen/widgets/grey_container.dart';
 import 'package:school_app/presentation/screen/widgets/screen_title.dart';
 
-class SubjectListScreen extends StatelessWidget {
-  const SubjectListScreen({super.key});
+class SubjectListScreen extends ConsumerWidget {
+  const SubjectListScreen({
+    super.key,
+    this.viewMode = true,
+    this.classRoom,
+  });
+  final bool viewMode;
+  final ClassRoom? classRoom;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    var api = ref.watch(getSubjectsProvider);
+
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -28,88 +37,80 @@ class SubjectListScreen extends StatelessWidget {
           const ScreenTitle(title: 'Subjects'),
           SizedBox(height: 32.h),
           Expanded(
-            child: Consumer(
-              builder: (context, ref, child) {
-                var api = ref.watch(getSubjectsProvider);
-                return api.when(
-                  loading: () {
-                    return const Center(child: CircularProgressIndicator());
-                  },
-                  error: (error, stackTrace) {
-                    return Text('error :$error');
-                  },
-                  data: (data) {
-                    return ListView.builder(
-                      itemCount: data.$1!.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        SubjectModel subj = data.$1![index];
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) => SubjectDetailScreen(
-                                        subjectModel: subj)));
-                          },
-                          child: Container(
-                            height: 70.h,
-                            margin: EdgeInsets.only(
-                                bottom: 16.h, left: 16.w, right: 16.w),
-                            padding: EdgeInsets.only(
-                              left: 22.w,
-                              top: 13.h,
-                              bottom: 14.h,
-                              right: 22.w,
-                            ),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: kLightGreyColor,
-                              borderRadius: BorderRadius.circular(10.r),
-                            ),
-                            child: Row(
+            child: api.when(
+              loading: () {
+                return const Center(child: CircularProgressIndicator());
+              },
+              error: (error, stackTrace) {
+                return Text('error :$error');
+              },
+              data: (data) {
+                if (data.$2 != null) {
+                  return Text('error :${data.$2}');
+                }
+                return ListView.builder(
+                  itemCount: data.$1!.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    SubjectModel subj = data.$1![index];
+                    return GestureDetector(
+                      onTap: () {
+                        if (viewMode) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      SubjectDetailScreen(subjectModel: subj)));
+                        } else {
+                          ref
+                              .read(classroomNotifierProvider.notifier)
+                              .assignSubject(subj, classRoom!);
+                          Navigator.pop(context);
+                          // Navigator.pop(context);
+                        }
+                      },
+                      child: GreyContainer(
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      subj.name,
-                                      style: TextStyle(
-                                        fontSize: 17.sp,
-                                      ),
-                                    ),
-                                    Text(
-                                      subj.teacher,
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
-                                      ),
-                                    )
-                                  ],
+                                Text(
+                                  subj.name,
+                                  style: TextStyle(
+                                    fontSize: 17.sp,
+                                  ),
                                 ),
-                                const Spacer(),
-                                Column(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      "${subj.credits}",
-                                      style: TextStyle(
-                                        fontSize: 17.sp,
-                                      ),
-                                    ),
-                                    Text(
-                                      "Credit",
-                                      style: TextStyle(
-                                        fontSize: 13.sp,
-                                      ),
-                                    )
-                                  ],
+                                Text(
+                                  subj.teacher,
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                  ),
                                 )
                               ],
                             ),
-                          ),
-                        );
-                      },
+                            const Spacer(),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Text(
+                                  "${subj.credits}",
+                                  style: TextStyle(
+                                    fontSize: 17.sp,
+                                  ),
+                                ),
+                                Text(
+                                  "Credit",
+                                  style: TextStyle(
+                                    fontSize: 13.sp,
+                                  ),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ),
                     );
                   },
                 );

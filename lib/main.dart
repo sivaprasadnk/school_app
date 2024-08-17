@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               appBarTheme: const AppBarTheme(
                 backgroundColor: kWhiteColor,
+                scrolledUnderElevation: 0,
               ),
               scaffoldBackgroundColor: kWhiteColor,
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

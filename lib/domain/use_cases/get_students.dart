@@ -6,6 +6,6 @@ class GetStudents {
   final RepositoryImpl repositoryImpl;
   Future<(List<StudentModel>?, String?)> call() async {
     var resp = await repositoryImpl.getStudents();
-    return (resp.$1!, resp.$2!);
+    return (resp.$1, resp.$2);
   }
 }
