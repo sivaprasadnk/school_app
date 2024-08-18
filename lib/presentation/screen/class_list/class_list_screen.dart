@@ -5,6 +5,7 @@ import 'package:school_app/core/constant_colors.dart';
 import 'package:school_app/core/extensions/string_ext.dart';
 import 'package:school_app/presentation/providers.dart';
 import 'package:school_app/presentation/screen/class_details/class_details_screen.dart';
+import 'package:school_app/presentation/screen/widgets/body_text.dart';
 import 'package:school_app/presentation/screen/widgets/screen_title.dart';
 
 class ClassListScreen extends ConsumerWidget {
@@ -85,11 +86,8 @@ class ClassListScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  item.name.toTitleCase(),
-                                  style: TextStyle(
-                                    fontSize: 17.sp,
-                                  ),
+                                BodyText(
+                                  title: item.name.toTitleCase(),
                                 ),
                                 Text(
                                   item.layout.toTitleCase(),

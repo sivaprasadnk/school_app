@@ -4,7 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:school_app/core/constant_colors.dart';
 import 'package:school_app/domain/entity/classroom.dart';
 import 'package:school_app/presentation/providers.dart';
+import 'package:school_app/presentation/screen/student_list/students_list_screen.dart';
 import 'package:school_app/presentation/screen/subject_list/subject_list_screen.dart';
+import 'package:school_app/presentation/screen/widgets/body_text.dart';
+import 'package:school_app/presentation/screen/widgets/common_btn.dart';
 import 'package:school_app/presentation/screen/widgets/grey_container.dart';
 import 'package:school_app/presentation/screen/widgets/screen_title.dart';
 
@@ -15,7 +18,12 @@ class ClassDetailsScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(classroomNotifierProvider);
-
+    var subject = ref
+        .read(classroomNotifierProvider.notifier)
+        .subjectFromClass(classRoom);
+    var student = ref
+        .read(classroomNotifierProvider.notifier)
+        .studentFromClass(classRoom);
     return Scaffold(
       appBar: AppBar(
         leading: GestureDetector(
@@ -30,49 +38,101 @@ class ClassDetailsScreen extends ConsumerWidget {
           SizedBox(height: 21.h),
           ScreenTitle(title: classRoom.name),
           SizedBox(height: 32.h),
-
-          Consumer(builder: (context, ref, _) {
-            ref.watch(classroomNotifierProvider.notifier).printItems();
-            return (!ref
-                    .watch(classroomNotifierProvider.notifier)
-                    .subjectExists(classRoom))
+          (!ref
+                  .watch(classroomNotifierProvider.notifier)
+                  .subjectExists(classRoom))
+              ? GreyContainer(
+                  child: Row(
+                    children: [
+                      const BodyText(title: 'Add Subject'),
+                      const Spacer(),
+                      CommonBtn(
+                        height: 39.h,
+                        width: 86.w,
+                        callback: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => SubjectListScreen(
+                                        viewMode: false,
+                                        classRoom: classRoom,
+                                      )));
+                        },
+                        bgColor: kLightGreenColor,
+                        child: Text(
+                          'Add',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 17.sp,
+                            color: kDarkGreenColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              : GreyContainer(
+                  child: Row(
+                    children: [
+                      BodyText(title: subject!.name),
+                      const Spacer(),
+                      CommonBtn(
+                        height: 39.h,
+                        width: 86.w,
+                        callback: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) => SubjectListScreen(
+                                        viewMode: false,
+                                        classRoom: classRoom,
+                                      )));
+                        },
+                        bgColor: kLightGreenColor,
+                        child: Text(
+                          'Change',
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 17.sp,
+                            color: kDarkGreenColor,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+          SizedBox(height: 16.h),
+          if (subject == null)
+            const SizedBox.shrink()
+          else
+            student == null
                 ? GreyContainer(
                     child: Row(
                       children: [
-                        Text(
-                          'Add Subject',
-                          style: TextStyle(fontSize: 17.sp),
-                        ),
+                        const BodyText(title: 'Add Student'),
                         const Spacer(),
-                        GestureDetector(
-                          onTap: () {
+                        CommonBtn(
+                          height: 39.h,
+                          width: 86.w,
+                          callback: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (_) => SubjectListScreen(
+                                    builder: (_) => StudentsListScreen(
                                           viewMode: false,
                                           classRoom: classRoom,
                                         )));
                           },
-                          child: Container(
-                            height: 39.h,
-                            width: 86.w,
-                            decoration: BoxDecoration(
-                              color: kLightGreenColor,
-                              borderRadius: BorderRadius.circular(10.r),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Add',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 17.sp,
-                                  color: kDarkGreenColor,
-                                ),
-                              ),
+                          bgColor: kLightGreenColor,
+                          child: Text(
+                            'Add',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 17.sp,
+                              color: kDarkGreenColor,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   )
@@ -83,86 +143,34 @@ class ClassDetailsScreen extends ConsumerWidget {
                     return GreyContainer(
                       child: Row(
                         children: [
-                          Text(
-                            subject!.name,
-                            style: TextStyle(fontSize: 17.sp),
-                          ),
+                          BodyText(title: subject!.name),
                           const Spacer(),
-                          GestureDetector(
-                            onTap: () {
+                          CommonBtn(
+                            height: 39.h,
+                            width: 86.w,
+                            callback: () {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (_) => SubjectListScreen(
+                                      builder: (_) => StudentsListScreen(
                                             viewMode: false,
                                             classRoom: classRoom,
                                           )));
                             },
-                            child: Container(
-                              height: 39.h,
-                              width: 86.w,
-                              decoration: BoxDecoration(
-                                color: kLightGreenColor,
-                                borderRadius: BorderRadius.circular(10.r),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Change',
-                                  style: TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    fontSize: 17.sp,
-                                    color: kDarkGreenColor,
-                                  ),
-                                ),
+                            bgColor: kLightGreenColor,
+                            child: Text(
+                              'Remove',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w600,
+                                fontSize: 17.sp,
+                                color: kDarkGreenColor,
                               ),
                             ),
-                          )
+                          ),
                         ],
                       ),
                     );
-                  });
-          })
-          // else
-          // GreyContainer(
-          //   child: Row(
-          //     children: [
-          //       Text(
-          //         subject!.name,
-          //         style: TextStyle(fontSize: 17.sp),
-          //       ),
-          //       const Spacer(),
-          //       GestureDetector(
-          //         onTap: () {
-          //           Navigator.push(
-          //               context,
-          //               MaterialPageRoute(
-          //                   builder: (_) => SubjectListScreen(
-          //                         viewMode: false,
-          //                         classRoom: classRoom,
-          //                       )));
-          //         },
-          //         child: Container(
-          //           height: 39.h,
-          //           width: 86.w,
-          //           decoration: BoxDecoration(
-          //             color: kLightGreenColor,
-          //             borderRadius: BorderRadius.circular(10.r),
-          //           ),
-          //           child: Center(
-          //             child: Text(
-          //               'Change',
-          //               style: TextStyle(
-          //                 fontWeight: FontWeight.w600,
-          //                 fontSize: 17.sp,
-          //                 color: kDarkGreenColor,
-          //               ),
-          //             ),
-          //           ),
-          //         ),
-          //       )
-          //     ],
-          //   ),
-          // )
+                  })
         ],
       ),
     );

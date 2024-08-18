@@ -1,13 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:school_app/domain/entity/classroom.dart';
 import 'package:school_app/presentation/providers.dart';
 import 'package:school_app/presentation/screen/student_detail/student_detail_screen.dart';
+import 'package:school_app/presentation/screen/widgets/body_text.dart';
 import 'package:school_app/presentation/screen/widgets/grey_container.dart';
 import 'package:school_app/presentation/screen/widgets/screen_title.dart';
 
 class StudentsListScreen extends ConsumerWidget {
-  const StudentsListScreen({super.key});
+  const StudentsListScreen({
+    this.viewMode = true,
+    this.classRoom,
+    super.key,
+  });
+  final bool viewMode;
+  final ClassRoom? classRoom;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -60,11 +68,8 @@ class StudentsListScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  stud.name,
-                                  style: TextStyle(
-                                    fontSize: 17.sp,
-                                  ),
+                                BodyText(
+                                  title: stud.name,
                                 ),
                                 Text(
                                   stud.email,

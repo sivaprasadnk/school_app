@@ -5,6 +5,7 @@ import 'package:school_app/data/model/subject_model.dart';
 import 'package:school_app/domain/entity/classroom.dart';
 import 'package:school_app/presentation/providers.dart';
 import 'package:school_app/presentation/screen/subject_detail/subject_detail_screen.dart';
+import 'package:school_app/presentation/screen/widgets/body_text.dart';
 import 'package:school_app/presentation/screen/widgets/grey_container.dart';
 import 'package:school_app/presentation/screen/widgets/screen_title.dart';
 
@@ -76,11 +77,8 @@ class SubjectListScreen extends ConsumerWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(
-                                  subj.name,
-                                  style: TextStyle(
-                                    fontSize: 17.sp,
-                                  ),
+                                BodyText(
+                                  title: subj.name,
                                 ),
                                 Text(
                                   subj.teacher,
