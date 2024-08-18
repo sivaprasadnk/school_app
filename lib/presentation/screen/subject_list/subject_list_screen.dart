@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:school_app/core/common_strings.dart';
 import 'package:school_app/data/model/subject_model.dart';
 import 'package:school_app/domain/entity/classroom.dart';
 import 'package:school_app/presentation/providers.dart';
@@ -52,8 +53,7 @@ class SubjectListScreen extends ConsumerWidget {
                 if (data.$2 != null) {
                   return const Padding(
                     padding: EdgeInsets.all(16.0),
-                    child: Text(
-                        'The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application'),
+                    child: Text(errorText),
                   );
                 }
                 return ListView.builder(

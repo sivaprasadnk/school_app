@@ -1,5 +1,8 @@
 const apiBaseUrl = 'https://nibrahim.pythonanywhere.com/';
-const studentsEndPoint = 'students/?api_key=5e2bD';
-const clssroomsEndPoint = 'classrooms/?api_key=5e2bD';
-const subjectsEndPoint = 'subjects/?api_key=5e2bD';
-const regnEndPoint = 'registration/?api_key=5e2bD';
+const studentsEndPoint = 'students/';
+const clssroomsEndPoint = 'classrooms/';
+const subjectsEndPoint = 'subjects/';
+const regnEndPoint = 'registration/';
+
+const errorText =
+    'The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application';

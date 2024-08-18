@@ -30,14 +30,12 @@ class HomeScreen extends ConsumerWidget {
                       'Hello,',
                       style: TextStyle(
                         fontWeight: FontWeight.w700,
-                        // height: 33.41.h,
                         fontSize: 28.sp,
                       ),
                     ),
                     Text(
                       'Good Morning',
                       style: TextStyle(
-                        fontWeight: FontWeight.w400,
                         fontSize: 22.sp,
                       ),
                     )
@@ -49,8 +47,16 @@ class HomeScreen extends ConsumerWidget {
                     ref.read(homeScreenNotifierProvider.notifier).toggleView();
                   },
                   child: isGridView
-                      ? const Icon(Icons.menu)
-                      : const Icon(Icons.grid_view_outlined),
+                      ? Image.asset(
+                          'assets/images/menu.png',
+                          height: 32.h,
+                          width: 32.w,
+                        )
+                      : Image.asset(
+                          'assets/images/grid.png',
+                          height: 32.h,
+                          width: 32.w,
+                        ),
                 )
               ],
             ),

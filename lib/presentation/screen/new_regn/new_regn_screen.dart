@@ -98,7 +98,10 @@ class NewRegnScreen extends StatelessWidget {
               height: 48.h,
               width: 107.w,
               callback: () {
-                ref.read(regnNotifierProvider.notifier).submitRegn();
+                var data = ref.read(regnNotifierProvider.notifier).submitData();
+                ref
+                    .read(homeScreenNotifierProvider.notifier)
+                    .submitRegn(data.student!.id, data.subject!.id);
                 Navigator.pop(context);
               },
               bgColor: kDarkGreenColor,

@@ -7,11 +7,13 @@ class RegnData {
   Student? student;
   int? id;
   bool isComplete;
+  bool isDeleted;
   RegnData({
     required this.subject,
     required this.student,
     required this.id,
     this.isComplete = false,
+    this.isDeleted = false,
   });
 }
 
@@ -56,6 +58,17 @@ class RegnNotifier extends StateNotifier<List<RegnData>> {
     return state.last.subject;
   }
 
+  RegnData submitData() {
+    var data = state.last;
+
+    return RegnData(
+      subject: data.subject,
+      student: data.student,
+      id: data.id,
+      isComplete: true,
+    );
+  }
+
   submitRegn() {
     var data = state.last;
     var index = state.indexWhere((element) => element.id == data.id);
@@ -70,6 +83,20 @@ class RegnNotifier extends StateNotifier<List<RegnData>> {
   }
 
   List<RegnData> completedList() {
-    return state.where((element) => element.isComplete).toList();
+    return state
+        .where((element) => element.isComplete && !element.isDeleted)
+        .toList();
+  }
+
+  deleteRegnData(RegnData data) {
+    var index = state.indexWhere((element) => element.id == data.id);
+    state[index] = RegnData(
+      subject: data.subject,
+      student: data.student,
+      id: data.id,
+      isComplete: true,
+      isDeleted: true,
+    );
+    state = [...state];
   }
 }
