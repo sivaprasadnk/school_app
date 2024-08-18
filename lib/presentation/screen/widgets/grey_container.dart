@@ -3,13 +3,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:school_app/core/constant_colors.dart';
 
 class GreyContainer extends StatelessWidget {
-  const GreyContainer({super.key, required this.child});
+  const GreyContainer({
+    super.key,
+    required this.child,
+    this.height = 70,
+  });
   final Widget child;
+  final double height;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 70.h,
+      height: height.h,
       margin: EdgeInsets.only(bottom: 16.h, left: 16.w, right: 16.w),
       padding: EdgeInsets.only(
         left: 22.w,

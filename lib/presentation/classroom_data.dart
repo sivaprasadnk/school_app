@@ -12,18 +12,6 @@ class ClassroomData {
     required this.classroom,
     required this.student,
   });
-
-  ClassroomData copyWith({
-    Subject? subject,
-    ClassRoom? classroom,
-    Student? student,
-  }) {
-    return ClassroomData(
-      subject: subject ?? this.subject,
-      classroom: classroom ?? this.classroom,
-      student: student ?? this.student,
-    );
-  }
 }
 
 class ClassroomNotifier extends StateNotifier<List<ClassroomData>> {

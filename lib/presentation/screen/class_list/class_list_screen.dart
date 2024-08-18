@@ -46,7 +46,11 @@ class ClassListScreen extends ConsumerWidget {
               },
               data: (data) {
                 if (data.$2 != null) {
-                  return Text('error :${data.$2}');
+                  return const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                        'The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application'),
+                  );
                 }
                 return ListView.builder(
                   itemCount: data.$1!.length,

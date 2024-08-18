@@ -11,10 +11,12 @@ import 'package:school_app/presentation/screen/widgets/screen_title.dart';
 class StudentsListScreen extends ConsumerWidget {
   const StudentsListScreen({
     this.viewMode = true,
+    this.registerMode = false,
     this.classRoom,
     super.key,
   });
   final bool viewMode;
+  final bool registerMode;
   final ClassRoom? classRoom;
 
   @override
@@ -46,7 +48,11 @@ class StudentsListScreen extends ConsumerWidget {
               },
               data: (data) {
                 if (data.$2 != null) {
-                  return Text('error :${data.$2}');
+                  return const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                        'The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application'),
+                  );
                 }
                 return ListView.builder(
                   itemCount: data.$1!.length,
@@ -55,11 +61,25 @@ class StudentsListScreen extends ConsumerWidget {
                     var stud = data.$1![index];
                     return GestureDetector(
                       onTap: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) =>
-                                    StudentDetailScreen(studentModel: stud)));
+                        if (viewMode) {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (_) =>
+                                      StudentDetailScreen(studentModel: stud)));
+                        } else {
+                          if (!registerMode) {
+                            ref
+                                .read(classroomNotifierProvider.notifier)
+                                .assignStudent(stud, classRoom!);
+                            Navigator.pop(context);
+                          } else {
+                            ref
+                                .read(regnNotifierProvider.notifier)
+                                .assignStudent(stud);
+                            Navigator.pop(context);
+                          }
+                        }
                       },
                       child: GreyContainer(
                         child: Row(

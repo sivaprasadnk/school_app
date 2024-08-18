@@ -10,6 +10,7 @@ import 'package:school_app/domain/use_cases/get_students.dart';
 import 'package:school_app/domain/use_cases/get_subjects.dart';
 import 'package:school_app/presentation/classroom_data.dart';
 import 'package:school_app/presentation/home_screen_notifier.dart';
+import 'package:school_app/presentation/regn_data.dart';
 
 final homeScreenNotifierProvider =
     StateNotifierProvider<HomeScreenNotifier, bool>(
@@ -18,6 +19,10 @@ final homeScreenNotifierProvider =
 final classroomNotifierProvider =
     StateNotifierProvider<ClassroomNotifier, List<ClassroomData>>(
         (ref) => ClassroomNotifier());
+
+final regnNotifierProvider =
+    StateNotifierProvider<RegnNotifier, List<RegnData>>(
+        (ref) => RegnNotifier());
 
 final getStudentsProvider =
     FutureProvider<(List<StudentModel>?, String?)>((ref) async {

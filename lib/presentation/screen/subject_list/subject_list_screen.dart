@@ -13,9 +13,12 @@ class SubjectListScreen extends ConsumerWidget {
   const SubjectListScreen({
     super.key,
     this.viewMode = true,
+    this.registerMode = false,
     this.classRoom,
   });
   final bool viewMode;
+  final bool registerMode;
+
   final ClassRoom? classRoom;
 
   @override
@@ -47,7 +50,11 @@ class SubjectListScreen extends ConsumerWidget {
               },
               data: (data) {
                 if (data.$2 != null) {
-                  return Text('error :${data.$2}');
+                  return const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text(
+                        'The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application'),
+                  );
                 }
                 return ListView.builder(
                   itemCount: data.$1!.length,
@@ -63,11 +70,17 @@ class SubjectListScreen extends ConsumerWidget {
                                   builder: (_) =>
                                       SubjectDetailScreen(subjectModel: subj)));
                         } else {
-                          ref
-                              .read(classroomNotifierProvider.notifier)
-                              .assignSubject(subj, classRoom!);
-                          Navigator.pop(context);
-                          // Navigator.pop(context);
+                          if (!registerMode) {
+                            ref
+                                .read(classroomNotifierProvider.notifier)
+                                .assignSubject(subj, classRoom!);
+                            Navigator.pop(context);
+                          } else {
+                            ref
+                                .read(regnNotifierProvider.notifier)
+                                .assignSubject(subj);
+                            Navigator.pop(context);
+                          }
                         }
                       },
                       child: GreyContainer(

@@ -36,7 +36,10 @@ class ClassDetailsScreen extends ConsumerWidget {
       body: Column(
         children: [
           SizedBox(height: 21.h),
-          ScreenTitle(title: classRoom.name),
+          ScreenTitle(
+            title: classRoom.name,
+            withTitleCase: true,
+          ),
           SizedBox(height: 32.h),
           (!ref
                   .watch(classroomNotifierProvider.notifier)
@@ -136,41 +139,32 @@ class ClassDetailsScreen extends ConsumerWidget {
                       ],
                     ),
                   )
-                : Builder(builder: (context) {
-                    var subject = ref
-                        .read(classroomNotifierProvider.notifier)
-                        .subjectFromClass(classRoom);
-                    return GreyContainer(
-                      child: Row(
-                        children: [
-                          BodyText(title: subject!.name),
-                          const Spacer(),
-                          CommonBtn(
-                            height: 39.h,
-                            width: 86.w,
-                            callback: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => StudentsListScreen(
-                                            viewMode: false,
-                                            classRoom: classRoom,
-                                          )));
-                            },
-                            bgColor: kLightGreenColor,
-                            child: Text(
-                              'Remove',
-                              style: TextStyle(
-                                fontWeight: FontWeight.w600,
-                                fontSize: 17.sp,
-                                color: kDarkGreenColor,
-                              ),
+                : GreyContainer(
+                    child: Row(
+                      children: [
+                        BodyText(title: student.name),
+                        const Spacer(),
+                        CommonBtn(
+                          height: 39.h,
+                          width: 86.w,
+                          callback: () {
+                            ref
+                                .read(classroomNotifierProvider.notifier)
+                                .removeStudent(classRoom);
+                          },
+                          bgColor: kLightGreenColor,
+                          child: Text(
+                            'Remove',
+                            style: TextStyle(
+                              fontWeight: FontWeight.w600,
+                              fontSize: 17.sp,
+                              color: kDarkGreenColor,
                             ),
                           ),
-                        ],
-                      ),
-                    );
-                  })
+                        ),
+                      ],
+                    ),
+                  )
         ],
       ),
     );
