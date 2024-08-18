@@ -14,7 +14,7 @@ class GreyContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: height.h,
+      height: height.h + 2.h,
       margin: EdgeInsets.only(bottom: 16.h, left: 16.w, right: 16.w),
       padding: EdgeInsets.only(
         left: 22.w,

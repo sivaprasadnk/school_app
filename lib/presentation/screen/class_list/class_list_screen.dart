@@ -96,7 +96,7 @@ class ClassListScreen extends ConsumerWidget {
                                 Text(
                                   item.layout.toTitleCase(),
                                   style: TextStyle(
-                                    fontSize: 13.sp,
+                                    fontSize: 12.sp,
                                   ),
                                 )
                               ],
@@ -114,7 +114,7 @@ class ClassListScreen extends ConsumerWidget {
                                 Text(
                                   "Seats",
                                   style: TextStyle(
-                                    fontSize: 13.sp,
+                                    fontSize: 12.sp,
                                   ),
                                 )
                               ],
