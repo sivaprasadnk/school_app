@@ -14,6 +14,8 @@ class RepositoryImpl implements Repository {
       var resp = await remoteDataSource.getStudentsList();
       return (resp.$1!, null);
     } catch (err) {
+      print(" error :$err");
+
       return (null, 'error');
     }
   }
