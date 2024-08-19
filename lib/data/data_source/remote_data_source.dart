@@ -29,11 +29,8 @@ class RemoteDataSourceImpl implements RemoteDataSource {
     final params = {
       'api_key': '55E2d',
     };
-    print(" url :$url");
-
     var uri = Uri.parse(url).replace(queryParameters: params);
-    var resp = await http.get(uri);
-    print("${resp.statusCode}");
+    var resp = await client.get(uri);
     if (resp.statusCode == 200) {
       var json = (jsonDecode(resp.body) as Map);
 

@@ -1,6 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:http/http.dart' as http;
-import 'package:school_app/data/data_source/remote_data_source.dart';
+import 'package:school_app/core/locator.dart';
 import 'package:school_app/data/model/classroom_model.dart';
 import 'package:school_app/data/model/regn_model.dart';
 import 'package:school_app/data/model/student_model.dart';
@@ -29,28 +28,20 @@ final regnNotifierProvider =
 
 final getStudentsProvider =
     FutureProvider.autoDispose<(List<StudentModel>?, String?)>((ref) async {
-  RemoteDataSourceImpl dataSource = RemoteDataSourceImpl(client: http.Client());
-  RepositoryImpl repo = RepositoryImpl(remoteDataSource: dataSource);
-  return GetStudents(repositoryImpl: repo).call();
+  return GetStudents(repositoryImpl: locator<RepositoryImpl>()).call();
 });
 
 final getSubjectsProvider =
     FutureProvider.autoDispose<(List<SubjectModel>?, String?)>((ref) async {
-  RemoteDataSourceImpl dataSource = RemoteDataSourceImpl(client: http.Client());
-  RepositoryImpl repo = RepositoryImpl(remoteDataSource: dataSource);
-  return GetSubjects(repositoryImpl: repo).call();
+  return GetSubjects(repositoryImpl: locator<RepositoryImpl>()).call();
 });
 
 final getClassProvider =
     FutureProvider.autoDispose<(List<ClassRoomModel>?, String?)>((ref) async {
-  RemoteDataSourceImpl dataSource = RemoteDataSourceImpl(client: http.Client());
-  RepositoryImpl repo = RepositoryImpl(remoteDataSource: dataSource);
-  return GetClasses(repositoryImpl: repo).call();
+  return GetClasses(repositoryImpl: locator<RepositoryImpl>()).call();
 });
 
 final getRegnProvider =
     FutureProvider.autoDispose<(List<RegnModel>?, String?)>((ref) async {
-  RemoteDataSourceImpl dataSource = RemoteDataSourceImpl(client: http.Client());
-  RepositoryImpl repo = RepositoryImpl(remoteDataSource: dataSource);
-  return GetRegistrations(repositoryImpl: repo).call();
+  return GetRegistrations(repositoryImpl: locator<RepositoryImpl>()).call();
 });

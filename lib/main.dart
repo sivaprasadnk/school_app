@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:school_app/core/constant_colors.dart';
+import 'package:school_app/core/locator.dart';
 import 'package:school_app/presentation/screen/home/home_screen.dart';
 
 void main() {
+  setup();
   runApp(const MyApp());
 }
 
