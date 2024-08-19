@@ -103,6 +103,7 @@ class NewRegnScreen extends StatelessWidget {
                     .read(homeScreenNotifierProvider.notifier)
                     .submitRegn(data.student!.id, data.subject!.id);
                 Navigator.pop(context);
+                Navigator.pop(context);
               },
               bgColor: kDarkGreenColor,
               child: Text(

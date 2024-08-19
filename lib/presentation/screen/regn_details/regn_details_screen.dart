@@ -119,6 +119,7 @@ class RegnDetailsScreen extends StatelessWidget {
                                 if (context.mounted) {
                                   Navigator.pop(context);
                                   Navigator.pop(context);
+                                  Navigator.pop(context);
                                 }
                               },
                             )
@@ -145,6 +146,7 @@ class RegnDetailsScreen extends StatelessWidget {
                                     .read(homeScreenNotifierProvider.notifier)
                                     .deleteRegn(regnData.id!);
                                 if (context.mounted) {
+                                  Navigator.pop(context);
                                   Navigator.pop(context);
                                   Navigator.pop(context);
                                 }
